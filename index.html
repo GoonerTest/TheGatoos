@@ -1,1 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Glowing Words with Floating Images</title>
+  <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: black;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Top glowing words */
+    .header {
+      display: flex;
+      gap: 40px;
+      margin-top: 40px;
+      font-family: 'DynaPuff', cursive;
+      font-size: 2.8rem;
+    }
+
+    .header span {
+      color: white;
+      text-shadow: 0 0 10px #00f, 0 0 20px #0ff, 0 0 30px #00f;
+      position: relative;
+      cursor: pointer;
+    }
+
+    /* Smooth underline */
+    .header span::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 100%;
+      height: 3px;
+      background: #0ff;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.4s ease;
+    }
+
+    .header span:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* Floating images container */
+    .floating {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .floating img {
+      position: absolute;
+      animation: float linear infinite, fadeInOut ease-in-out infinite;
+    }
+
+    /* Floating movement with sideways drift */
+    @keyframes float {
+      from {
+        transform: translateY(110vh) translateX(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(0vh) translateX(60px) rotate(180deg);
+      }
+      to {
+        transform: translateY(-120vh) translateX(-60px) rotate(360deg);
+      }
+    }
+
+    /* Fade in and out */
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 0.8; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <span>CREATE</span>
+    <span>INSPIRE</span>
+    <span>GLOW</span>
+  </div>
+
+  <div class="floating" id="floating"></div>
+
+  <script>
+    const container = document.getElementById("floating");
+    const imgSrc = "your-image.png"; // replace with your image
+    const numImages = 40; // doubled the number of images
+
+    for (let i = 0; i < numImages; i++) {
+      const img = document.createElement("img");
+      img.src = imgSrc;
+
+      // Larger random size
+      const size = Math.random() * 200 + 100; // 100px to 300px
+      img.style.width = size + "px";
+
+      // Random horizontal position
+      img.style.left = Math.random() * 100 + "vw";
+
+      // Random animation duration
+      const floatDuration = Math.random() * 20 + 20; // 20s to 40s
+      const fadeDuration = Math.random() * 8 + 6;   // 6s to 14s
+      img.style.animationDuration = `${floatDuration}s, ${fadeDuration}s`;
+
+      // Random delay
+      const delay = Math.random() * 20 + "s";
+      img.style.animationDelay = `${delay}, ${delay}`;
+
+      container.appendChild(img);
+    }
+  </script>
+</body>
+</html>
 
